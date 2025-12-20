@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #111827;
+            color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: #020617;
+            border-radius: 20px;
+            padding: 24px 20px;
+            width: 92%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 14px 40px rgba(15,23,42,0.9);
+            border: 1px solid #4b5563;
+        }
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="title">Invalid QR code</div>
+    <div class="subtitle" th:text="${error}">
+        Student not found for QR code.
+    </div>
+</div>
+</body>
+</html>
+
+

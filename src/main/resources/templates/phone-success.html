@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Entry Approved</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at top, #22c55e 0, #0f172a 40%, #020617 100%);
+            color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: rgba(15,23,42,0.96);
+            border-radius: 20px;
+            padding: 28px 22px 22px 22px;
+            width: 92%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 18px 50px rgba(22,163,74,0.7);
+            border: 1px solid #22c55e;
+        }
+        .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 999px;
+            background: rgba(22,163,74,0.1);
+            border: 1px solid rgba(22,163,74,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+            font-size: 28px;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .subtitle {
+            font-size: 13px;
+            color: #d1fae5;
+            margin-bottom: 16px;
+        }
+        .entry-time {
+            font-size: 13px;
+            color: #a5b4fc;
+            margin-bottom: 4px;
+        }
+        .note {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .name {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="icon">✓</div>
+    <div class="title">Entry Approved</div>
+    <div class="subtitle">
+        Welcome,
+        <span class="name" th:text="${entry.student.name}">Amit Kumar</span>
+    </div>
+    <div class="entry-time">
+        Entry time:
+        <span th:text="${#temporals.format(entry.entryTime, 'dd MMM yyyy HH:mm:ss')}">
+            01 Dec 2025 10:15:00
+        </span>
+    </div>
+    <div class="note">
+        Your entry has been recorded on the security dashboard.
+        You may now proceed inside the campus.
+    </div>
+</div>
+</body>
+</html>
+
+

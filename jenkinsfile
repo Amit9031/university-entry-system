@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/Amit9031/university-entry-system.git'
+            }
+        }
+
+        stage('Deploy to Apache Server') {
+            steps {
+                sh '''
+                echo "Deploying PHP project..."
+
+                sudo rm -rf /var/www/html/university-entry-system
+                sudo cp -r * /var/www/html/
+
+                echo "Deployment completed"
+                '''
+            }
+        }
+
+        stage('Restart Apache') {
+            steps {
+                sh '''
+                sudo systemctl restart apache2
+                '''
+            }
+        }
+    }
+}

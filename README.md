@@ -13,9 +13,9 @@ A real-time QR-based university gate entry system built with Spring Boot, featur
 ## 🛠️ Tech Stack
 
 - **Backend**: Spring Boot 3.3.4, Java 17
-- **Database**: H2 (in-memory)
-- **Frontend**: Thymeleaf templates
-- **DevOps**: Maven → Jenkins → Docker → Kubernetes
+- **Database**: H2 (in-memory) & **MongoDB 7.0** (with `mongosh` automated init & `$jsonSchema`)
+- **Frontend**: Thymeleaf templates & **Mongo Express** (Admin Web UI)
+- **DevOps**: Maven → Jenkins → Docker & Docker Compose → Kubernetes
 
 ## 📦 Quick Start (Local)
 
@@ -95,22 +95,59 @@ See `DEPLOYMENT.md` for detailed pipeline setup.
      - Phone number
      - Entry date & time
 
+## 🍃 MongoDB & mongosh Setup (CA Module)
+
+The project includes a complete MongoDB NoSQL setup with `$jsonSchema` validation, compound indexing, seed data, and analytical queries for Continuous Assessment (CA) evaluation:
+
+- **Automated Docker Compose**:
+  ```bash
+  docker compose up -d
+  # MongoDB runs on port 27017
+  # Mongo Express Web UI runs at http://localhost:8081
+  ```
+- **Run mongosh initialization locally**:
+  ```bash
+  mongosh "mongodb://localhost:27017/university_gate_db" mongo-init/init.js
+  ```
+- **Run 10 CA Demonstration Queries**:
+  ```bash
+  mongosh "mongodb://localhost:27017/university_gate_db" mongo-init/03-ca-queries.js
+  ```
+- **Helper Shell Runner**:
+  ```bash
+  ./scripts/run-mongosh.sh --init      # Run initialization
+  ./scripts/run-mongosh.sh --queries   # Run CA evaluation queries
+  ./scripts/run-mongosh.sh --stats     # Show collections and document counts
+  ./scripts/run-mongosh.sh             # Interactive mongosh shell
+  ```
+
+See [`MONGODB_INIT.md`](file:///Users/amitranjan/.gemini/antigravity/scratch/university-entry-system/MONGODB_INIT.md) for full architectural documentation, schema design diagrams, query explanations, and viva Q&A.
+
 ## 📁 Project Structure
 
 ```
-powerCA2/
+university-entry-system/
+├── mongo-init/                 # MongoDB Shell (mongosh) Initialization
+│   ├── 01-init-db.js           # DB creation, RBAC user, $jsonSchema & indexes
+│   ├── 02-seed-data.js         # Realistic sample data (students, gates, entries)
+│   ├── 03-ca-queries.js        # 10 CA evaluation queries & aggregations
+│   └── init.js                 # Master init runner with status summary
+├── scripts/
+│   ├── run-mongosh.sh          # Helper script for mongosh operations
+│   └── export-data.sh          # Export MongoDB collections to JSON
 ├── src/main/java/com/university/gate/
-│   ├── controller/     # Web controllers
-│   ├── model/          # Entity classes
-│   ├── repository/     # Data repositories
-│   └── service/        # Business logic
+│   ├── controller/             # Web controllers
+│   ├── model/                  # Entity classes
+│   ├── repository/             # Data repositories
+│   └── service/                # Business logic
 ├── src/main/resources/
-│   ├── templates/      # Thymeleaf HTML pages
+│   ├── templates/              # Thymeleaf HTML pages
 │   └── application.properties
-├── Dockerfile          # Docker configuration
-├── Jenkinsfile         # Jenkins pipeline
-├── k8s/                # Kubernetes manifests
-└── pom.xml             # Maven dependencies
+├── docker-compose.yml          # Multi-container: App + MongoDB 7 + Mongo-Express
+├── Dockerfile                  # Multi-stage Docker build
+├── Jenkinsfile                 # Jenkins pipeline
+├── MONGODB_INIT.md             # Detailed CA documentation & viva guide
+└── pom.xml                     # Maven dependencies
 ```
 
 ## 🔐 Environment Variables
